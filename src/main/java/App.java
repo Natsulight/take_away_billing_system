@@ -23,15 +23,19 @@ public class App {
         StringBuilder result = new StringBuilder();
         int totalPrice = 0, amountDiscount = 0, specifiedItemsDiscount = 0;
         result.append("============= Order details =============\n");
-        for (String orderString : inputs) {
-            String[] orderItemArray = orderString.split(" ");
-            Item item = itemMap.get(orderItemArray[0]);
-            int orderItemTotalPrice = (int) item.getPrice() * Integer.valueOf(orderItemArray[2]);
-            totalPrice += orderItemTotalPrice;
-            if (specifiedItemsMap.containsKey(item.getId())) {
-                specifiedItemsDiscount += (int) item.getPrice() / 2;
+        try {
+            for (String orderString : inputs) {
+                String[] orderItemArray = orderString.split(" ");
+                Item item = itemMap.get(orderItemArray[0]);
+                int orderItemTotalPrice = (int) item.getPrice() * Integer.valueOf(orderItemArray[2]);
+                totalPrice += orderItemTotalPrice;
+                if (specifiedItemsMap.containsKey(item.getId())) {
+                    specifiedItemsDiscount += (int) item.getPrice() / 2;
+                }
+                result.append(item.getName() + " x " + orderItemArray[2] + " = " + orderItemTotalPrice + " yuan\n");
             }
-            result.append(item.getName() + " x " + orderItemArray[2] + " = " + orderItemTotalPrice + " yuan\n");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         result.append("-----------------------------------\n");
         if (totalPrice > 0 && specifiedItemsDiscount > 0) {
